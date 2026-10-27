@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>%TITLE%</title>
+  <meta name="description" content="%DESCRIPTION%" />
+  <meta name="author" content="%NAME%" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="%SITE_URL%/" />
+  <meta name="theme-color" content="#f1e8da" />
+  <meta name="color-scheme" content="light" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="%SITE_URL%/" />
+  <meta property="og:title" content="%TITLE%" />
+  <meta property="og:description" content="%DESCRIPTION%" />
+  <meta property="og:image" content="%SITE_URL%/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="%TITLE%" />
+  <meta name="twitter:description" content="%DESCRIPTION%" />
+  <meta name="twitter:image" content="%SITE_URL%/og-image.jpg" />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <script type="application/ld+json">
+    { "@context": "https://schema.org", "@type": "Person", "name": "%NAME%", "jobTitle": "%ROLE%", "description": "%BIO%", "url": "%SITE_URL%/" }
+  </script>
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body class="is-loading">
+  <a class="skip-link" href="#projects">Skip to projects</a>
+
+  <div class="loader" aria-hidden="true">
+    <svg viewBox="0 0 32 32">
+      <defs><clipPath id="loader-clip"><rect class="loader-fill" x="0" y="0" width="32" height="32"/></clipPath></defs>
+      <path d="M16 3 28 10v12L16 29 4 22V10Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" opacity=".25"/>
+      <g clip-path="url(#loader-clip)">
+        <path d="M16 3 28 10v12L16 29 4 22V10Z" fill="currentColor"/>
+        <path d="M4 10l12 7 12-7M16 17v12" fill="none" stroke="var(--cream)" stroke-width="2.2" stroke-linejoin="round"/>
+      </g>
+    </svg>
+  </div>
+
+  <header class="topbar">
+    <a class="back-btn" href="/" aria-label="Back to all projects">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a class="logo" href="#top" aria-label="Back to top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 28 10v12L16 29 4 22V10Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M4 10l12 7 12-7M16 17v12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></svg>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <span class="nav-indicator" aria-hidden="true"></span>
+      <a href="#about" data-section="about">About</a>
+      <a href="#projects" data-section="projects">Projects</a>
+      <a href="#contact" data-section="contact">Contact</a>
+    </nav>
+    <div class="topbar-actions">
+      <a class="cta magnetic" href="#contact">Get in touch</a>
+      <button class="sound-btn" type="button" aria-pressed="false" aria-label="Turn sound on">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="wave wave-1" d="M15 9.5a3.5 3.5 0 0 1 0 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="wave wave-2" d="M17.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="mute" d="M16 9.5l5 5m0-5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="home">
+  <main id="top">
+    <!-- Hero + hologram About share one pinned stage driven by scroll -->
+    <section class="stage" aria-label="Introduction">
+      <div class="stage-pin">
+        <div class="stage-bg stage-bg-holo" aria-hidden="true"></div>
+        <div class="room-card" aria-hidden="true"></div>
+        <canvas class="stage-canvas" aria-hidden="true"></canvas>
+        <div class="card-corners" aria-hidden="true"></div>
+        <p class="speech" aria-hidden="true"></p>
+
+        <div class="hero">
+          <h1 class="hero-name"><span data-bind="firstName">%FIRST_NAME%</span><span data-bind="lastName">%LAST_NAME%</span></h1>
+          <p class="tag hero-role"><span class="role-text">%ROLE%</span></p>
+        </div>
+
+        <div id="about" class="holo-ui" aria-label="About">
+          <div class="panel panel-name">
+            <strong data-bind="firstName">%FIRST_NAME%</strong>
+            <span class="panel-loc"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 15s5-4.6 5-8.6A5 5 0 0 0 3 6.4C3 10.4 8 15 8 15Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="6.5" r="1.6" fill="currentColor"/></svg><span data-bind="location"></span></span>
+          </div>
+          <div class="panel panel-bio"><p data-bind="bio">%BIO%</p></div>
+          <div class="panel panel-skills">
+            <strong>Skills</strong>
+            <ul data-skills></ul>
+          </div>
+          <p class="scan-counter" aria-hidden="true">000</p>
+        </div>
+
+        <a class="scroll-cue" href="#scroll" aria-label="Scroll down">
+          <span class="mouse"></span>
+          <svg viewBox="0 0 16 10" aria-hidden="true"><path d="M2 2l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <section id="projects" class="projects-section">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="tag tag-small">Selected</p>
+          <h2 class="section-title">Projects</h2>
+        </div>
+        <div class="projects" data-projects></div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+      <canvas class="contact-canvas" aria-hidden="true"></canvas>
+      <div class="container contact">
+        <h2 class="contact-title reveal">Let's work<br />together!</h2>
+        <ul class="socials reveal" data-socials></ul>
+        <button class="copy-btn reveal" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <span data-bind="email"></span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a class="to-top" href="#top" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="footer-links" data-legal></div>
+      <p class="footer-credit">Music generated live in your browser</p>
+      <p class="footer-copy">© <span data-year></span> <span data-bind="fullName">%NAME%</span></p>
+    </div>
+  </footer>
+  </div>
+
+  <div class="project-view" hidden>
+    <main class="pv-body" id="project"></main>
+    <footer class="pv-footer">
+      <div class="container pv-footer-inner">
+        <ul class="pv-socials" data-footer-socials></ul>
+        <a class="to-top" href="#project" aria-label="Back to top">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="footer-links" data-legal></div>
+        <p class="footer-credit">Music generated live in your browser</p>
+        <p class="footer-copy">© <span data-year></span> <span data-bind="fullName">%NAME%</span></p>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
