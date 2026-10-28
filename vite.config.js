@@ -16,6 +16,8 @@ function siteMeta() {
     LAST_NAME: profile.lastName,
     ROLE: profile.roles[0],
     BIO: profile.bio,
+    TAGLINE: profile.tagline,
+    AVAILABILITY: profile.availability,
   };
   return {
     name: "site-meta",

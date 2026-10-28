@@ -8,7 +8,7 @@
   <meta name="author" content="%NAME%" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="%SITE_URL%/" />
-  <meta name="theme-color" content="#f1e8da" />
+  <meta name="theme-color" content="#dfd1bc" />
   <meta name="color-scheme" content="light" />
 
   <meta property="og:type" content="website" />
@@ -35,34 +35,53 @@
 <body class="is-loading">
   <a class="skip-link" href="#projects">Skip to projects</a>
 
+  <!-- Shared SVG definitions matching david-hckh.com -->
+  <svg style="display: none" viewBox="0 0 56 61" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <path id="logo-path" d="M3 14 24 2C28 0 28 0 32 2L53 14C56 16 56 17 56 19L56 43C56 46 55 47 51 49L32 59C28 61 28 61 24 59L5 49C1 47 0 46 0 43L0 19C0 17 0 16 3 14M28 4 5 17 28 28 51 17 28 4M53 20 30 31 30 56 53 44 53 20M40 42 33 35C33 35 32 34 33 33 34 32 35 33 36 34L36 34 43 41C44 42 44 42 43 43L35 51C35 51 34 52 33 51 32 50 33 49 33 49L40 42M16 42 23 35C23 35 24 34 23 33 22 32 21 33 20 34L13 41C12 42 12 42 13 43L21 51C21 51 22 52 23 51 24 50 23 49 23 49L16 42"></path>
+      <path id="notch-path" d="M0 256H256C114.616 256 0 141.385 0 0V256Z"></path>
+      <path id="arrow-path" d="M164 48L244 126.709M244 126.709L164 207M244 126.709H12"></path>
+    </defs>
+  </svg>
+
   <div class="loader" aria-hidden="true">
-    <svg viewBox="0 0 32 32">
-      <defs><clipPath id="loader-clip"><rect class="loader-fill" x="0" y="0" width="32" height="32"/></clipPath></defs>
-      <path d="M16 3 28 10v12L16 29 4 22V10Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" opacity=".25"/>
-      <g clip-path="url(#loader-clip)">
-        <path d="M16 3 28 10v12L16 29 4 22V10Z" fill="currentColor"/>
-        <path d="M4 10l12 7 12-7M16 17v12" fill="none" stroke="var(--cream)" stroke-width="2.2" stroke-linejoin="round"/>
-      </g>
+    <svg class="preloader-svg" viewBox="0 0 56 61" xmlns="http://www.w3.org/2000/svg">
+      <mask id="preloader-mask">
+        <rect fill="black" height="61" width="61"></rect>
+        <rect fill="white" height="61" width="61" class="loader-fill"></rect>
+      </mask>
+      <use href="#logo-path" class="preloader-path" opacity="0.3"></use>
+      <use href="#logo-path" class="preloader-path" mask="url(#preloader-mask)"></use>
     </svg>
   </div>
 
   <header class="topbar">
-    <a class="back-btn" href="/" aria-label="Back to all projects">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-    <a class="logo" href="#top" aria-label="Back to top">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 28 10v12L16 29 4 22V10Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M4 10l12 7 12-7M16 17v12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></svg>
-    </a>
+    <div class="topbar-left">
+      <a class="back-btn" href="/" aria-label="Back to home" data-cursor="circle-white">
+        <svg viewBox="0 0 256 256" fill="none" aria-hidden="true"><use href="#arrow-path" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="logo" href="#top" aria-label="Back to top" data-cursor="circle-white">
+        <svg class="logo-svg" viewBox="0 0 56 61" aria-hidden="true"><use href="#logo-path"/></svg>
+      </a>
+    </div>
+
     <nav class="nav" aria-label="Main">
-      <span class="nav-indicator" aria-hidden="true"></span>
-      <a href="#about" data-section="about">About</a>
-      <a href="#projects" data-section="projects">Projects</a>
-      <a href="#contact" data-section="contact">Contact</a>
+      <div class="nav-links">
+        <span class="nav-indicator" aria-hidden="true"></span>
+        <a href="#about" data-section="about" data-cursor="circle-white">About</a>
+        <a href="#projects" data-section="projects" data-cursor="circle-white">Projects</a>
+        <a href="#contact" data-section="contact" data-cursor="circle-white">Contact</a>
+      </div>
     </nav>
+
     <div class="topbar-actions">
-      <a class="cta magnetic" href="#contact">Get in touch</a>
-      <button class="sound-btn" type="button" aria-pressed="false" aria-label="Turn sound on">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="wave wave-1" d="M15 9.5a3.5 3.5 0 0 1 0 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="wave wave-2" d="M17.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="mute" d="M16 9.5l5 5m0-5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <a class="cta" href="#contact" data-cursor="circle-white">Get in touch</a>
+      <button class="sound-btn" type="button" aria-pressed="false" aria-label="Enable sounds" data-cursor="circle-white">
+        <svg overflow="visible" viewBox="0 0 256 256" fill="none" aria-hidden="true">
+          <path d="M127.166 17.4305C96.0324 23.3072 67.3994 42.1874 49.6444 68.4448C43.3927 77.8224 43.1426 78.0725 36.5157 78.0725C24.6374 78.0725 10.5085 87.075 4.88191 98.2031C1.13086 105.33 -0.494593 118.334 0.130582 134.338C0.880791 150.968 3.63156 159.22 11.2587 166.722C16.7602 172.349 27.6383 177.225 35.8906 177.85L42.5174 178.475L48.269 187.353C55.1459 197.981 67.6494 210.734 78.5275 217.987C96.4075 230.115 123.29 239.493 140.795 239.868C148.672 239.993 150.172 239.618 152.673 237.117L155.549 234.241L155.924 128.712L156.174 23.3072L153.298 19.8062C150.923 17.0554 149.172 16.3052 143.546 16.0551C139.795 15.8051 132.543 16.4302 127.166 17.4305Z" fill="currentColor" class="volume-body"></path>
+          <path d="M178.18 75.6969C170.803 77.6974 167.302 84.3243 169.928 91.0762C170.553 92.9517 173.179 96.9528 175.555 99.8286C177.93 102.704 181.431 108.456 183.307 112.582C186.433 119.209 186.808 121.335 186.808 133.713C186.808 146.592 186.558 147.967 182.807 156.094C180.556 160.721 176.43 167.347 173.679 170.598C169.553 175.475 168.678 177.475 168.678 181.851C168.678 191.479 177.68 196.981 186.683 192.98C190.809 190.979 199.811 179.476 204.813 169.723C217.316 144.716 214.816 111.582 198.561 88.7005C189.809 76.4471 185.557 73.6963 178.18 75.6969Z" fill="currentColor" class="volume-wave-1"></path>
+          <path d="M206.438 43.6879C201.687 45.8135 198.061 52.9405 199.311 57.8169C199.686 59.5674 203.312 64.9439 207.438 69.8202C216.316 80.6983 222.443 91.8264 226.819 104.955C231.32 118.459 232.445 139.215 229.445 154.469C226.569 168.598 217.316 187.228 207.564 198.731C203.437 203.483 199.686 209.109 199.186 210.985C197.561 218.612 203.812 225.614 212.44 225.614C221.817 225.614 241.448 198.856 249.7 174.975C254.952 159.47 256.577 147.717 255.827 128.837C255.327 114.708 254.577 109.081 251.951 100.204C246.199 80.8233 238.572 66.8194 226.069 52.1903C217.691 42.5626 213.44 40.6871 206.438 43.6879Z" fill="currentColor" class="volume-wave-2"></path>
+        </svg>
       </button>
     </div>
   </header>
@@ -78,15 +97,30 @@
         <div class="card-corners" aria-hidden="true"></div>
         <p class="speech" aria-hidden="true"></p>
 
+        <!-- Hero poster framing the 3D developer room -->
         <div class="hero">
-          <h1 class="hero-name"><span data-bind="firstName">%FIRST_NAME%</span><span data-bind="lastName">%LAST_NAME%</span></h1>
-          <p class="tag hero-role"><span class="role-text">%ROLE%</span></p>
+          <div class="hero-inner">
+            <h1 class="hero-name"><span class="sr-only" data-bind="fullName">%NAME%</span><span data-bind="firstName" aria-hidden="true">%FIRST_NAME%</span><span data-bind="lastName" aria-hidden="true">%LAST_NAME%</span></h1>
+            <div class="tag hero-role">
+              <span class="banner-bg" aria-hidden="true"></span>
+              <span class="appearing-text">
+                <span class="role-text">%ROLE%</span>
+                <span class="role-clone" aria-hidden="true">%ROLE%</span>
+              </span>
+            </div>
+          </div>
         </div>
 
-        <div id="about" class="holo-ui" aria-label="About">
+        <div id="about" class="holo-ui" role="region" aria-label="About">
           <div class="panel panel-name">
             <strong data-bind="firstName">%FIRST_NAME%</strong>
-            <span class="panel-loc"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 15s5-4.6 5-8.6A5 5 0 0 0 3 6.4C3 10.4 8 15 8 15Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="6.5" r="1.6" fill="currentColor"/></svg><span data-bind="location"></span></span>
+            <span class="panel-loc">
+              <svg viewBox="0 0 256 256" fill="none" aria-hidden="true">
+                <path d="M127.501 11C77.519 11 37 51.4749 37 101.403C37 123.692 45.1125 144.063 58.5003 159.825L127.501 241L196.5 159.823C209.888 144.063 218 123.69 218 101.4C218.003 51.4749 177.484 11 127.501 11Z" stroke="currentColor" stroke-width="18"/>
+                <circle cx="128" cy="101" r="22" fill="currentColor"/>
+              </svg>
+              <span data-bind="location"></span>
+            </span>
           </div>
           <div class="panel panel-bio"><p data-bind="bio">%BIO%</p></div>
           <div class="panel panel-skills">
@@ -94,63 +128,116 @@
             <ul data-skills></ul>
           </div>
           <p class="scan-counter" aria-hidden="true">000</p>
+          <div class="progress-count" aria-hidden="true">
+            <div class="progress-count-bar"><div class="progress-count-bar-fill"></div></div>
+            <span class="progress-count-pct">0%</span>
+          </div>
         </div>
 
         <a class="scroll-cue" href="#scroll" aria-label="Scroll down">
-          <span class="mouse"></span>
-          <svg viewBox="0 0 16 10" aria-hidden="true"><path d="M2 2l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="mouse"><span class="mouse-dot"></span></span>
+          <svg viewBox="0 0 256 256" fill="none" aria-hidden="true" class="scroll-cue-arrow">
+            <path d="M87 18L197 126.41L87 237" stroke="currentColor" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </a>
       </div>
     </section>
 
     <section id="projects" class="projects-section">
-      <div class="container">
-        <div class="section-head reveal">
-          <p class="tag tag-small">Selected</p>
+      <div class="notch-section projects-notch-start" aria-hidden="true">
+        <div class="notch notch-left"><svg viewBox="0 0 256 256"><use href="#notch-path" fill="currentColor"/></svg></div>
+        <div class="notch notch-right"><svg viewBox="0 0 256 256"><use href="#notch-path" fill="currentColor"/></svg></div>
+      </div>
+      <div class="notch-section projects-notch-end" aria-hidden="true">
+        <div class="notch notch-left"><svg viewBox="0 0 256 256"><use href="#notch-path" fill="currentColor"/></svg></div>
+        <div class="notch notch-right"><svg viewBox="0 0 256 256"><use href="#notch-path" fill="currentColor"/></svg></div>
+      </div>
+      <div class="grid">
+        <div class="section-head projects-title reveal">
+          <div class="tag tag-small projects-title-banner">
+            <span class="banner-bg" aria-hidden="true"></span>
+            <span class="banner-copy">Selected</span>
+          </div>
           <h2 class="section-title">Projects</h2>
         </div>
+      </div>
+      <div class="grid">
         <div class="projects" data-projects></div>
       </div>
     </section>
 
     <section id="contact" class="contact-section">
       <canvas class="contact-canvas" aria-hidden="true"></canvas>
-      <div class="container contact">
-        <h2 class="contact-title reveal">Let's work<br />together!</h2>
-        <ul class="socials reveal" data-socials></ul>
-        <button class="copy-btn reveal" type="button">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-          <span data-bind="email"></span>
-        </button>
+      <div class="grid contact">
+        <div class="contact-content">
+          <h2 class="contact-title reveal">Let's work <br />together!</h2>
+          <ul class="socials reveal" data-socials></ul>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="container footer-inner">
-      <a class="to-top" href="#top" aria-label="Back to top">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="notch-section footer-notch" aria-hidden="true">
+      <div class="notch notch-left"><svg viewBox="0 0 256 256"><use href="#notch-path" fill="currentColor"/></svg></div>
+      <div class="notch notch-right"><svg viewBox="0 0 256 256"><use href="#notch-path" fill="currentColor"/></svg></div>
+    </div>
+    <div class="footer-content">
+      <a class="to-top" href="#top" aria-label="Back to top" data-cursor="circle-white">
+        <svg viewBox="0 0 256 256" fill="none" aria-hidden="true" class="to-top-icon">
+          <use href="#arrow-path" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </a>
-      <div class="footer-links" data-legal></div>
-      <p class="footer-credit">Music generated live in your browser</p>
-      <p class="footer-copy">© <span data-year></span> <span data-bind="fullName">%NAME%</span></p>
+      <div class="footer-top">
+        <div class="footer-links" data-legal></div>
+      </div>
+      <div class="footer-credits">
+        <p class="footer-copy">© <span data-year></span> <span data-bind="fullName">%NAME%</span></p>
+      </div>
     </div>
   </footer>
   </div>
 
   <div class="project-view" hidden>
     <main class="pv-body" id="project"></main>
-    <footer class="pv-footer">
-      <div class="container pv-footer-inner">
-        <ul class="pv-socials" data-footer-socials></ul>
-        <a class="to-top" href="#project" aria-label="Back to top">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <footer class="footer pv-footer">
+      <div class="notch-section footer-notch" aria-hidden="true">
+        <div class="notch notch-left"><svg viewBox="0 0 256 256"><use href="#notch-path" fill="currentColor"/></svg></div>
+        <div class="notch notch-right"><svg viewBox="0 0 256 256"><use href="#notch-path" fill="currentColor"/></svg></div>
+      </div>
+      <div class="footer-content">
+        <a class="to-top" href="#project" aria-label="Back to top" data-cursor="circle-white">
+          <svg viewBox="0 0 256 256" fill="none" aria-hidden="true" class="to-top-icon">
+            <use href="#arrow-path" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </a>
-        <div class="footer-links" data-legal></div>
-        <p class="footer-credit">Music generated live in your browser</p>
-        <p class="footer-copy">© <span data-year></span> <span data-bind="fullName">%NAME%</span></p>
+        <div class="footer-top">
+          <ul class="socials pv-socials" data-footer-socials></ul>
+          <div class="footer-links" data-legal></div>
+        </div>
+        <div class="footer-credits">
+          <p class="footer-copy">© <span data-year></span> <span data-bind="fullName">%NAME%</span></p>
+        </div>
       </div>
     </footer>
+  </div>
+
+  <!-- Custom cursor follower matching david-hckh.com -->
+  <div class="cursor-wrapper" aria-hidden="true">
+    <div class="cursor-scale">
+      <div class="cursor cursor-circle-black"></div>
+      <div class="cursor cursor-circle-white"></div>
+      <div class="cursor cursor-arrow">
+        <svg overflow="visible" viewBox="0 0 256 256" fill="none" class="cursor-arrow-icon">
+          <use href="#arrow-path" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="cursor cursor-arrow-external">
+        <svg overflow="visible" viewBox="0 0 256 256" fill="none" class="cursor-arrow-external-icon">
+          <use href="#arrow-path" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
   </div>
 
   <div class="toast" role="status" aria-live="polite"></div>
