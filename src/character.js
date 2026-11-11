@@ -156,12 +156,13 @@ export function poseSitting(rig) {
     leg.hip.rotation.set(-Math.PI / 2 + 0.12, -side * 0.18, 0);
     leg.knee.rotation.set(Math.PI / 2 - 0.18, 0, 0);
   });
-  // Reach both arms forward onto the desk. With the root at z ≈ 0.12 these
-  // rotations land the right hand on the keyboard and the left hand on the mouse.
-  rig.arms[0].shoulder.rotation.set(-1.12, -0.35, -0.22);
-  rig.arms[0].elbow.rotation.set(-0.42, 0.05, 0.08);
-  rig.arms[1].shoulder.rotation.set(-1.14, 0.06, 0.14);
-  rig.arms[1].elbow.rotation.set(-0.40, -0.15, -0.06);
+  // Both hands resting on their home keys, elbows bent. These are the angles the
+  // hero scene's arm IK produces at rest, so blending into other poses from the
+  // desk doesn't snap.
+  rig.arms[0].shoulder.rotation.set(-0.368, 0.805, -0.512);
+  rig.arms[0].elbow.rotation.set(-1.388, 0, 0);
+  rig.arms[1].shoulder.rotation.set(-0.252, -0.687, 0.653);
+  rig.arms[1].elbow.rotation.set(-1.448, 0, 0);
 }
 
 export function poseStanding(rig) {
@@ -174,33 +175,6 @@ export function poseStanding(rig) {
     arm.shoulder.rotation.set(0, 0, (i === 0 ? -1 : 1) * 0.12);
     arm.elbow.rotation.set(-0.12, 0, 0);
   });
-}
-
-export function poseArmsCrossed(rig) {
-  poseStanding(rig);
-  rig.arms[0].shoulder.rotation.set(-1.38, 0.38, -0.32);
-  rig.arms[0].elbow.rotation.set(-1.02, 0.18, 1.18);
-  rig.arms[1].shoulder.rotation.set(-1.28, -0.3, 0.28);
-  rig.arms[1].elbow.rotation.set(-0.92, -0.14, -1.08);
-}
-
-// Both arms raised to hold a box at chest height.
-export function poseCarry(rig) {
-  poseStanding(rig);
-  for (const [i, arm] of rig.arms.entries()) {
-    const side = i === 0 ? -1 : 1;
-    arm.shoulder.rotation.set(-1.12, side * 0.1, side * 0.42);
-    arm.elbow.rotation.set(-1.28, 0, -side * 0.18);
-  }
-}
-
-// Casual stance: one arm hanging, the other resting on a box or hip.
-export function poseRest(rig) {
-  poseStanding(rig);
-  rig.arms[0].shoulder.rotation.set(-0.12, 0.08, -0.18);
-  rig.arms[0].elbow.rotation.set(-0.22, 0, 0.08);
-  rig.arms[1].shoulder.rotation.set(-0.82, -0.12, 0.52);
-  rig.arms[1].elbow.rotation.set(-0.42, 0, -0.18);
 }
 
 // Blends every joint between two poses (t = 0 → a, 1 → b).

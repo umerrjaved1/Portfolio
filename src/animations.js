@@ -70,7 +70,7 @@ export function initGsapMagnetic(root = document) {
   });
 }
 
-// Hero Section Entrance Timeline matching david-hckh.com ---------------------
+// Hero Section Entrance Timeline ---------------------
 export function playHeroEntrance() {
   if (reducedMotion) return;
 

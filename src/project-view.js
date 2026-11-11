@@ -1,7 +1,7 @@
 import gsap from "gsap";
 import { projects } from "./data.js";
 
-// Full-page project view at /project/<slug> matching david-hckh.com layout:
+// Full-page project view at /project/<slug> layout:
 // hero grid with title, tags, description, and Live View button,
 // rounded media container with notched captions, then Next Project card.
 
@@ -192,9 +192,12 @@ function shot(project, item, index) {
 export function renderProject(root, project) {
   const next = projects[(projects.indexOf(project) + 1) % projects.length];
   root.style.setProperty("--pv-bg", project.theme || "#1c2f4f");
-  root.style.setProperty("--pv-card-bg", project.colors?.[0] ? "#2b3f66" : "#364e7c");
+  // Panels and borders are lighter tints of the project's own background colour
+  const bg = project.theme || "#1c2f4f";
+  root.style.setProperty("--pv-card-bg", `color-mix(in srgb, ${bg} 82%, #ffffff)`);
+  root.style.setProperty("--pv-line", `color-mix(in srgb, ${bg} 70%, #ffffff)`);
 
-  const tags = el("ul", { className: "pv-tags", ariaLabel: "Tech Stack" }, project.tags.map((tag) => {
+  const tags = el("ul", { className: "pv-tags", ariaLabel: "Tags" }, project.tags.map((tag) => {
     const li = el("li", { textContent: tag.label });
     li.style.background = tag.color;
     if (tag.ink) li.style.color = tag.ink;
@@ -209,7 +212,8 @@ export function renderProject(root, project) {
   const buttons = el("div", { className: "pv-buttons" });
   if (project.liveUrl) {
     const isGithub = project.liveUrl.includes("github.com");
-    const label = isGithub ? "Source Code" : "Live View";
+    const isPlay = project.liveUrl.includes("play.google.com");
+    const label = isGithub ? "Source Code" : isPlay ? "View on Google Play" : "Live View";
     buttons.append(el("a", {
       className: "pv-live",
       href: project.liveUrl,

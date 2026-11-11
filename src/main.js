@@ -104,6 +104,8 @@ function renderContent() {
   const contactSocials = $("[data-socials]");
   if (contactSocials) contactSocials.replaceChildren(...socialLinks());
 
+  renderHire();
+
   const footerSocials = $("[data-footer-socials]");
   if (footerSocials) footerSocials.replaceChildren(...socialLinks());
 
@@ -388,7 +390,7 @@ function setupNav() {
   update();
 }
 
-// Custom Cursor Follower matching david-hckh.com -----------------------------
+// Custom Cursor Follower -----------------------------
 
 function setupCursor() {
   if (!finePointer) return;
@@ -478,23 +480,168 @@ function setupSound() {
   });
 }
 
-function setupContactScene() {
-  const canvas = $(".contact-canvas");
-  if (!canvas) return;
-  let started = false;
-  const start = async () => {
-    if (started || canvas.getBoundingClientRect().top > innerHeight * 1.5) return;
-    started = true;
-    removeEventListener("scroll", start);
+// "Hire me" section -----------------------------------------------------------
+
+function renderHire() {
+  const hire = profile.hire || {};
+  const setText = (sel, text) => {
+    const node = $(sel);
+    if (node && text) node.textContent = text;
+  };
+  setText("[data-hire-status]", hire.status);
+  setText("[data-hire-lede]", hire.lede || profile.tagline);
+  setText("[data-response]", hire.responseTime);
+
+  const modes = $("[data-modes]");
+  if (modes) modes.replaceChildren(...(hire.modes || []).map((m) => el("li", { textContent: m })));
+
+  // Two copies of the list so the ticker loops seamlessly.
+  const ticker = $("[data-ticker]");
+  if (ticker && hire.services?.length) {
+    const items = [...hire.services, ...hire.services].map((s) => el("span", { textContent: s }));
+    ticker.replaceChildren(...items);
+  }
+
+  const initials = $("[data-initials]");
+  if (initials) initials.textContent = `${profile.firstName[0] ?? ""}${profile.lastName[0] ?? ""}`;
+
+  const chips = $("[data-chips]");
+  if (chips) {
+    chips.replaceChildren(...(profile.stats || []).slice(0, 4).map((s, i) =>
+      el("span", { className: `float-chip float-chip-${i + 1}` }, [
+        el("strong", { textContent: `${s.value}${s.suffix}` }),
+        el("span", { textContent: s.label }),
+      ]),
+    ));
+  }
+
+  const primary = $("[data-hire-primary]");
+  if (primary) {
+    if (hire.bookingUrl) {
+      Object.assign(primary, { href: hire.bookingUrl, target: "_blank", rel: "noopener noreferrer" });
+    } else {
+      const subject = encodeURIComponent(`Project inquiry for ${profile.firstName}`);
+      const body = encodeURIComponent("Hi! Here's what I'm building:\n\nTimeline:\nBudget range:\n");
+      primary.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+      setText("[data-hire-primary-label]", "Send me your project brief");
+    }
+  }
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    // Older browsers and embedded webviews: fall back to a hidden textarea.
+    const area = el("textarea", { value: text });
+    area.setAttribute("readonly", "");
+    area.style.cssText = "position:fixed;opacity:0;pointer-events:none";
+    document.body.append(area);
+    area.select();
+    let ok = false;
     try {
-      const { initContactScene } = await import("./contact-scene.js");
-      initContactScene(canvas, { reducedMotion, onWave: () => audio.play("chirp") });
-    } catch (error) {
-      console.warn("Contact scene unavailable.", error);
+      ok = document.execCommand("copy");
+    } catch {}
+    area.remove();
+    return ok;
+  }
+}
+
+// Plays the hire chat on the phone mockup while it's on screen, then loops.
+function setupChat() {
+  const body = $("[data-chat]");
+  const script = profile.hire?.chat || [];
+  if (!body || !script.length) return;
+
+  const bubble = ({ from, text }) => el("div", { className: `msg msg-${from}`, textContent: text });
+  if (reducedMotion) {
+    body.replaceChildren(...script.map(bubble));
+    return;
+  }
+
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  let visible = false;
+  let running = false;
+  const untilVisible = async () => {
+    while (!visible) await wait(300);
+  };
+
+  const play = async () => {
+    running = true;
+    for (;;) {
+      body.replaceChildren();
+      await wait(700);
+      for (const line of script) {
+        await untilVisible();
+        const typing = el("div", { className: `msg msg-${line.from} msg-typing` }, [el("i"), el("i"), el("i")]);
+        body.append(typing);
+        await wait(line.from === "me" ? 1400 : 900);
+        typing.replaceWith(bubble(line));
+        await wait(900 + line.text.length * 18);
+      }
+      await wait(3500);
     }
   };
-  addEventListener("scroll", start, { passive: true });
-  start();
+
+  new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (visible && !running) play();
+  }).observe(body);
+}
+
+// The phone leans toward the pointer.
+function setupTilt() {
+  const phone = $("[data-tilt]");
+  const section = $("#contact");
+  if (!phone || !section || reducedMotion || !finePointer) return;
+  section.addEventListener("pointermove", (e) => {
+    const r = phone.getBoundingClientRect();
+    const x = (e.clientX - (r.left + r.width / 2)) / innerWidth;
+    const y = (e.clientY - (r.top + r.height / 2)) / innerHeight;
+    phone.style.setProperty("--ry", `${(x * 18).toFixed(2)}deg`);
+    phone.style.setProperty("--rx", `${(-y * 14).toFixed(2)}deg`);
+  });
+  section.addEventListener("pointerleave", () => {
+    phone.style.setProperty("--ry", "-8deg");
+    phone.style.setProperty("--rx", "4deg");
+  });
+}
+
+function setupHire() {
+  setupChat();
+  setupTilt();
+  const clock = $("[data-clock]");
+  if (clock) {
+    const timeZone = profile.hire?.timeZone;
+    let format;
+    try {
+      format = new Intl.DateTimeFormat([], { hour: "2-digit", minute: "2-digit", timeZone });
+    } catch {
+      format = new Intl.DateTimeFormat([], { hour: "2-digit", minute: "2-digit" });
+    }
+    const tick = () => (clock.textContent = format.format(new Date()));
+    tick();
+    setInterval(tick, 15000);
+  }
+
+  const copyBtn = $("[data-copy-email]");
+  const hint = $("[data-copy-hint]");
+  let resetTimer;
+  copyBtn?.addEventListener("click", async () => {
+    if (!(await copyText(profile.email))) {
+      location.href = `mailto:${profile.email}`;
+      return;
+    }
+    copyBtn.classList.add("is-copied");
+    if (hint) hint.textContent = "Copied to clipboard!";
+    toast("Email copied");
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => {
+      copyBtn.classList.remove("is-copied");
+      if (hint) hint.textContent = "Click to copy";
+    }, 2400);
+  });
 }
 
 function setupSpeech() {
@@ -643,7 +790,7 @@ async function init() {
   setupNav();
   setupCursor();
   setupSound();
-  setupContactScene();
+  setupHire();
   setupLinks();
   showRoute(location.pathname);
 
